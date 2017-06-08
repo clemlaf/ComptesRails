@@ -1,0 +1,17 @@
+<select name="<%= na %>" <%= add %>
+	<% if (add2){ %>
+	  <% if (add2!='new'){ %>
+	    onChange="javascript:ajax(rw<%= add2 %>)"
+	<% } %>
+	<% } %>
+	>
+  <% if (z0){ %>
+    <option value=""><%= z0 %></option>
+  <% } %>
+  <% for (var i=0;i<res.length();i++){ %>
+    <option value=<%=list['id']%>
+      <% if (sele==list['id']){ %>selected<% } %>>
+      <%= list['name'] %>
+    </option>
+  <% } %>
+</select>

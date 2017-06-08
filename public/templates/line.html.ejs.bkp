@@ -1,0 +1,67 @@
+<tr class="<% if (tab.spec){ %>special<% }else{ %><%= style %><% } %>" id="rw<%= tabid %>">
+      <td>
+	<input name="id" type="text" value=<%= tabid %> readonly size="3" style="Text-align:right">
+	<a id="<%= tabid %>"></a></td>
+      <td>
+	<input name="date" type="text" id="dat<%= tabid %>" value="<%= tab.date %>" size=8 <% if (tabid!='new'){ %>onChange="javascript:ajax(rw<%= tabid %>);"<% } %>  autocomplete="off">
+    <button class="monbutton" onClick="javascript:setToday(dat<%= tabid %>);">A</button>
+    </td>
+	<td id="x<%= tabid %>">
+	  <%= this.partial({
+	  url:'dodropbox.html.ejs',
+	  na:'cp_s',z0:false,sele:tab.cpS==NULL?-1:tab.cpS,
+    add:'style="width:70px"',add2:tabid,res:comptes
+  })%>
+	</td>
+	<td>
+	  <%= this.partial({
+	  url:'dodropbox.html.ejs',
+	  na:'cp_d',z0:'--------',sele:tab.cpD==NULL?-1:tab.cpD,
+    add:'',add2:tabid,res:comptes
+  })%>
+	</td>
+	<td>
+	  <%= this.partial({
+	  url:'dodropbox.html.twig',
+	  na:'moy',z0:'----',sele:tab.moyen==NULL?-1:tab.moyen,
+    add:'', add2:tabid,res:moyens
+  })%>
+	</td>
+	<td>
+	  <%= this.partial({
+    url:'dodropbox.html.twig',
+	  na:'cat',z0:'--------',sele:tab.category==NULL?0:tab.category,
+    add:'',add2:tabid,res:categories
+  })%>
+	</td>
+	<td>
+	  <input name="com" type="text" value="<%= tab.com %>"
+    <% if (tabid!='new'){ %>onChange="javascript:ajax(rw<%= tabid %>);"
+    <% }else{ %>id="my_autocom"<% } %>></td>
+	  <td>
+	    <input id="pr<%= tabid %>" name="pr" type="text" value="<%= tab.pr/100 %>"
+       size=7 style="Text-Align:right;color:<% if (tab.pr>0) { %>#00AA00<% }else{ %>#AA0000<% } %>"
+       onChange="javascript:ajax(rw<%= tabid %>);"
+       ondblclick="javascript:change_signe(<%= tabid %>);javascript:ajax(rw<%= tabid %>);"
+       autocomplete="off">
+       </td>
+	  <td>
+	    <input id="pt<%= tabid %>" name="pt" class="check" type="checkbox"
+      onChange="javascript:ajax(rw<%= tabid %>);"
+      <% if (tab.poS==1){ %>checked<% } %>>
+      </td>
+	  <td style="Text-Align:right" id="so<%= tabid %>"><%= soldes[tabid] / 100 %></td>
+	  <td>
+	  <% if (tabid!='new'){ %>
+	    <button class="monbutton"
+      onClick="javascript:duplicate(rw<%= tabid %>, rwnew);" name="dupl">
+	  <% }else{ %>
+	    <button class="monbutton"
+      onClick="javascript:ajax(rw<%= tabid %>);" name="add">
+	  <% } %>
+	      <span class="icobutton addbutton">add</span></button></td>
+	  <td>
+	      <button class="monbutton"
+        onClick=<% if (tabid!='new'){ %>"javascript:supprime(rw<%= tabid %>);"<% }else{ %>"javascript:clearline(rw<%= tabid %>);"<% } %> name="supp" type="reset">
+	      <span class="icobutton delbutton">del</span></button></td>
+    </tr>

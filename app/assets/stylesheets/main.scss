@@ -1,0 +1,47 @@
+// Place all the styles related to the Main controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+$rightcolw:180px;
+/*div.form_rows {
+  display:block;
+  margin-right: $rightcolw
+}
+div.form_row{
+  display:block;
+  float:left;
+}*/
+div.form_sub{
+  width:$rightcolw;
+  display:block;
+  float:right;
+}
+div.content{
+  clear:both;
+}
+.solde{
+  text-align: right;
+}
+.price{
+  @extend .solde;
+  color: green !important;
+  &[value^="-"] { color: red !important; }
+}
+
+.paire  {background-color: #B9C8FF}
+.special  {background-color: #5DFF89}
+.impaire {background-color: #FFE3B9}
+
+.coldate {width:10em}
+.myplot {width:640px;height:480px;margin-left:auto;margin-right:auto}
+
+.twitter-typeahead {vertical-align:middle;}
+.form-control{background-color:rgba(255,255,255,0.4);}
+
+.updn-row{text-align:center;display:none}
+
+input, select, button { max-width:100%}
+th   {padding-left: 2px;padding-right: 2px}
