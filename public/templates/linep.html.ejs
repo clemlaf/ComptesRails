@@ -1,0 +1,71 @@
+  <tr data-change="" class="<% if (typeof(specid)!='undefined' && tabid==specid){ %>special<% }else{ %><%= style %><% } %>" id="rw<%= tabid %>">
+      <td>
+	<input name="id" type="text" value=<%= tabid %> readonly size="3" class="form-control form-control-sm">
+	<a id="<%= tabid %>"></a></td>
+      <td>
+        <div class="input-group">
+	<input name="date" class="form-control" type="text" id="dat<%= tabid %>" value="<%= tab.lastdate %>"
+        data-provide="datepicker" data-date-format="<%= locdate %>" autocomplete="off" data-myblur="" >
+    <span class="input-group-btn">
+    <button class="btn btn-default monbutton" data-settoday="">A</button>
+  </span>
+  </div>
+    </td>
+	  <td>
+	    <input id="d<%= tabid %>" name="days" type="text" value="<%= tab.days %>"
+       class="form-control "
+       autocomplete="off">
+       </td>
+	  <td>
+	    <input id="m<%= tabid %>" name="months" type="text" value="<%= tab.months %>"
+       class="form-control "
+       autocomplete="off">
+       </td>
+	<td id="x<%= tabid %>">
+	  <%= new EJS({
+	  url:'/templates/dodropbox.html.ejs'}).render({
+	  na:'cp_s',z0:false,sele:tab.cpS_id==null?-1:tab.cpS_id,
+    add:'',add2:tabid,res:comptes
+  })%>
+	</td>
+	<td>
+	  <%= new EJS({
+	  url:'/templates/dodropbox.html.ejs'}).render({
+	  na:'cp_d',z0:'--------',sele:tab.cpD_id==null?-1:tab.cpD_id,
+    add:'',add2:tabid,res:comptes
+  })%>
+	</td>
+	<td>
+	  <%= new EJS({
+	  url:'/templates/dodropbox.html.ejs'}).render({
+	  na:'moy',z0:'----',sele:tab.moyen_id==null?-1:tab.moyen_id,
+    add:'', add2:tabid,res:moyens
+  })%>
+	</td>
+	<td>
+	  <%= new EJS({
+	  url:'/templates/dodropbox.html.ejs'}).render({
+	  na:'cat',z0:'--------',sele:tab.category_id==null?0:tab.category_id,
+    add:'',add2:tabid,res:categories
+  })%>
+	</td>
+	<td>
+	  <input name="com" type="text" value="<%= tab.com %>" data-change="rw<%= tabid %>"
+    class="form-control typeahead"
+    <% if (tabid=='new'){ %> id="my_autocom"<% } %>></td>
+	  <td>
+	    <input id="pr<%= tabid %>" name="pr" type="text" value="<%= tab.pr/100 %>"
+       class="form-control price"
+       size=7
+
+       data-dblclick=""
+       autocomplete="off">
+       </td>
+	  <td>
+	  <button class="btn btn-default monbutton" name="duploradd">
+	      <span class="icobutton addbutton">add</span></button></td>
+	  <td>
+	      <button class="btn btn-default monbutton"
+        name="supporclear" type="reset">
+	      <span class="icobutton delbutton">del</span></button></td>
+    </tr>

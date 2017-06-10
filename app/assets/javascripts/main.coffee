@@ -9,6 +9,9 @@
    entree =
       id : $('#'+id+" td input[name=id]").val()
       date : $('#'+id+" td input[name=date]").val()
+      lastdate : $('#'+id+" td input[name=date]").val()
+      days : $('#'+id+" td input[name=days]").val()
+      months : $('#'+id+" td input[name=months]").val()
       cpS_id : $('#'+id+" td select[name=cp_s]").val()
       cpD_id : $('#'+id+" td select[name=cp_d]").val()
       category_id : $('#'+id+" td select[name=cat]").val()

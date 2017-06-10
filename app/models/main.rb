@@ -23,25 +23,34 @@ class MainForm
   def to_hash()
     puts @cpS_ids
     puts @cpS_ids.inspect
-    cps=self.class.to_iarr(@cpS_ids)
-    cpd=self.class.to_iarr(@cpD_ids)
-    cats=self.class.to_iarr(@category_ids)
-    moys=self.class.to_iarr(@moyen_ids)
     args={}
-    args[:cpS]=cps unless cps.empty?
-    args[:cpD]=cpd unless cpd.empty?
-    args[:category]=cats unless cats.empty?
-    args[:moyen]=moys unless moys.empty?
-    args[:com]=@com unless (@com==nil or @com.to_s.length<1)
+    args[:cpS]=cpS_ids unless cpS_ids.empty?
+    args[:cpD]=cpD_ids unless cpD_ids.empty?
+    args[:category]=category_ids unless category_ids.empty?
+    args[:moyen]=moyen_ids unless moyen_ids.empty?
+    args[:com]=com unless com.empty?
     return args
   end
-  def getDate1()
-    return @date1.to_date if @date1.respond_to?(:to_date) and not @date1.is_a?(String)
-    Date.strptime(@date1, I18n.t('date.formats.default')) rescue nil
-  end
-  def getDate2()
-    return @date2.to_date if @date2.respond_to?(:to_date) and not @date2.is_a?(String)
-    Date.strptime(@date2, I18n.t('date.formats.default')) rescue nil
+  def to_type
+    cpS_ids=self.class.to_iarr cpS_ids
+    cpD_ids=self.class.to_iarr cpD_ids
+    category_ids=self.class.to_iarr category_ids
+    moyens_ids=self.class.to_iarr moyens_ids
+    if date1.respond_to?(:to_date) and not date1.is_a?(String)
+      date1=date1.to_date
+    else
+      date1=Date.strptime(date1, I18n.t('date.formats.default')) rescue nil
+    end
+    if date2.respond_to?(:to_date) and not date2.is_a?(String)
+      date2=date2.to_date
+    else
+      date2=Date.strptime(date2, I18n.t('date.formats.default')) rescue nil
+    end
+    com=com.to_s
+    nb=nb.to_i
+    type=type.to_i
+    page=page.to_i
+    poS=poS.to_s
   end
 
   def persisted?

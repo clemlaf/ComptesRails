@@ -43,8 +43,8 @@ class Entry < ApplicationRecord
     rel=relp.or(relm) # relation pour la requete principale
     puts main.type.inspect
     # filtre sur la date
-    d1=main.getDate1
-    d2=main.getDate2
+    d1=main.date1
+    d2=main.date2
     rel=rel.where(date_field.gt(d1)) if d1
     rel=rel.where(date_field.lt(d2)) if d2
     mh.delete(:cpS)
@@ -56,14 +56,14 @@ class Entry < ApplicationRecord
       # table
       allc=rel.count
       # pagination
-      lim=main.nb.to_i
-      page=main.page.to_i
+      lim=main.nb
+      page=main.page
       nbpage=(allc-1)/lim+1
       page=nbpage if page==0 or page>nbpage
       off=(page-1)*lim
       rel=rel.order(:date,:id)
       # no limit on pagination for graphes
-      rel=rel.limit(lim).offset(off) unless main.type.to_i >1
+      rel=rel.limit(lim).offset(off) unless main.type >1
       # solde
       sold=0.0 # pour graphe solde ou table initalisée à 0
       if rel.any?
@@ -91,7 +91,6 @@ class Entry < ApplicationRecord
       outh[:page]=page
       outh[:nbpage]=nbpage
       outh[:solde_p]=soldepointe.to_f/100.0
-      outh[:typeahead]=Entry.select(:com).distinct.where("created_at <= ?", 1.month.ago).order(created_at: :desc).limit(50).all
     when 2
       #graphe solde
       rel=rel.order(:date,:id)

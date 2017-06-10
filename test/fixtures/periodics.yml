@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  lastdate: 2017-06-08
+  cpS: one
+  cpD: one
+  com: MyString
+  pr: 1
+  moyen: one
+  category: one
+
+two:
+  lastdate: 2017-06-08
+  cpS: two
+  cpD: two
+  com: MyString
+  pr: 1
+  moyen: two
+  category: two
