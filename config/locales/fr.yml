@@ -25,6 +25,27 @@ fr:
   pos: "Crédit"
   neg: "Débit"
   net: "Solde"
+  average: "Moyenne"
+  messages:
+    dataload: "Données chargées"
+  types:
+    table: "Table"
+    evo: "Évolution solde"
+    cam: "Camembert dépenses"
+    mens: "Revenus et dépenses mensuels"
+    perio: "Opérations périodiques"
+  table_headers:
+    ind: "Index"
+    date: "Date"
+    days: "Jours"
+    months: "Mois"
+    cps: "Compte concerné par l'op."
+    cpd: "Somme prélevée/versée au compte"
+    moy: "Moyen"
+    cat: "Catégorie"
+    com: "Commentaire"
+    pr: "Prix"
+    sol: "Solde"
   date:
     formats:
       default: "%d/%m/%Y"
@@ -34,6 +55,13 @@ fr:
       main:
         cpS_ids: "Comptes à créditer"
         cpD_ids: "Comptes à débiter"
+        date1 : "Depuis le…"
+        date2 : "…jusqu'au…"
+        category_ids: "Catégorie"
+        moyen_ids: "Moyen"
+        com: "Commentaire"
+        poS: "Pointé ?"
+        type: "Type"
     submit:
       main:
         create: "Appliquer le filtre"

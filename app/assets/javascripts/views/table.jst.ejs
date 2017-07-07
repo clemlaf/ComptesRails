@@ -1,64 +1,56 @@
   <% if(type<5) { %>
         <div id='up_row' class='updn-row'>
-        <button class="btn btn-default" id="up_but"><span class='glyphicon glyphicon-chevron-up'/></button>
+        <button class="btn btn-default updn_but up_but" id="up_but"><span class='glyphicon glyphicon-chevron-up'/></button>
         page <%=page%>/<%=nbpage%>
+        <button class="btn btn-default updn_but dn_but" id="dn_but"><span class='glyphicon glyphicon-chevron-down'/></button>
         </div>
   <%} %>
   <table id="princ" class="mytable">
-        <th>index</th>
-        <th class="coldate">Date</th>
-        <% if(type==5) { %>
-          <th>Jours</th>
-          <th>Mois</th>
-        <%} %>
-        <th>Compte source</th>
-        <th>Compte destination</th>
-        <th>Moyen</th>
-        <th>Catégorie</th>
-        <th>Commentaire</th>
-        <th>Prix</th>
-        <% if(type<5) { %>
-          <th></th>
-          <th>Solde</th>
-        <%} %>
+    <tr>
+    <% for(var index in table_headers) { %>
+        <% if( type < 5 && (index=='days' || index=='months')) { ; }
+        else if(type < 5 && (index == 'sol') ) { %>
+        <th></th><th><%= table_headers[index] %></th>
+        <% }else if( index=='date') { %>
+        <th class='coldate'><%= table_headers[index] %></th>
+        <% } else { %>
+        <th><%= table_headers[index] %></th>
+        <% } %>
+    <% } %>
+   </tr>
     <% if(type<5) { %>
       <% if(ord) { %>
-  	    <%= new EJS({
-  	  url:'/templates/line.html.ejs'}).render({
+  	    <%= JST['views/line']({
         style:'',comptes:comptes,moyens:moyens,tab:newline,categories:categories,
          tabid:'new', locdate:locdate
        })%>
       <% } %>
       <% var cnt=1 %>
       <% for(var i=0;i<entries.length;i++ ) { var tab=entries[i]; if(tab!=null) {%>
-  	    <%= new EJS({
-  	  url:'/templates/line.html.ejs'}).render({
+  	    <%= JST['views/line']({
         style:(cnt%2==0 ? 'paire':'impaire'),comptes:comptes,moyens:moyens,tab:tab,
         categories:categories, tabid:tab.id, locdate: locdate, solde:soldes[i], specid:specid
       })%>
         <% cnt=1-cnt %>
       <% }} %>
       <% if (!ord) { %>
-  	    <%= new EJS({
-  	  url:'/templates/line.html.ejs'}).render({
+  	    <%= JST['views/line']({
         style:'',comptes:comptes,moyens:moyens,tab:newline,categories:categories,
          tabid:'new', locdate: locdate
        } )%>
       <% } %>
-      <tr><td/><td/><td/><td/><td/><td/><td/><td colspan=2 style="text-align:right;">Solde Pointé&nbsp;:&nbsp;</td>
+      <tr><td/><td/><td/><td/><td/><td/><td colspan=2 style="text-align:right;">Solde Pointé&nbsp;:&nbsp;</td><td />
       <td id="soldepointe"><%= solde_p %></td></tr>
     <%}else{ %>
       <% var cnt=1 %>
       <% for(var i=0;i<periods.length;i++ ) { var tab=periods[i]; if(tab!=null) {%>
-  	    <%= new EJS({
-  	  url:'/templates/linep.html.ejs'}).render({
+  	    <%= JST['views/linep']({
         style:(cnt%2==0 ? 'paire':'impaire'),comptes:comptes,moyens:moyens,tab:tab,
         categories:categories, tabid:tab.id, locdate: locdate, specid:specid
       })%>
         <% cnt=1-cnt %>
       <% }} %>
-  	    <%= new EJS({
-  	  url:'/templates/linep.html.ejs'}).render({
+  	    <%= JST['views/linep']({
         style:'',comptes:comptes,moyens:moyens,tab:newline,categories:categories,
          tabid:'new', locdate: locdate
        } )%>
@@ -66,7 +58,8 @@
   </table>
     <% if(type<5) { %>
         <div id='dn_row' class='updn-row'>
-        <button class="btn btn-default" id="dn_but"><span class='glyphicon glyphicon-chevron-down'/></button>
+        <button class="btn btn-default updn_but up_but" id="up_but"><span class='glyphicon glyphicon-chevron-up'/></button>
         page <%=page%>/<%=nbpage%>
+        <button class="btn btn-default updn_but dn_but" id="dn_but"><span class='glyphicon glyphicon-chevron-down'/></button>
         </div>
     <% } %>

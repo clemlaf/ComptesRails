@@ -7,34 +7,30 @@
 	<input name="date" class="form-control" type="text" id="dat<%= tabid %>" value="<%= tab.date %>"
         data-provide="datepicker" data-date-format="<%= locdate %>" autocomplete="off" data-myblur="" >
     <span class="input-group-btn">
-    <button class="btn btn-default monbutton" data-settoday="">A</button>
+    <button class="btn btn-default monbutton" data-settoday=""><span class="glyphicon glyphicon-star"/></button>
   </span>
   </div>
     </td>
 	<td id="x<%= tabid %>">
-	  <%= new EJS({
-	  url:'/templates/dodropbox.html.ejs'}).render({
+    <%= JST['views/dodropbox']({
 	  na:'cp_s',z0:false,sele:tab.cpS_id==null?-1:tab.cpS_id,
     add:'',add2:tabid,res:comptes
   })%>
 	</td>
 	<td>
-	  <%= new EJS({
-	  url:'/templates/dodropbox.html.ejs'}).render({
+    <%= JST['views/dodropbox']({
 	  na:'cp_d',z0:'--------',sele:tab.cpD_id==null?-1:tab.cpD_id,
     add:'',add2:tabid,res:comptes
   })%>
 	</td>
 	<td>
-	  <%= new EJS({
-	  url:'/templates/dodropbox.html.ejs'}).render({
+    <%= JST['views/dodropbox']({
 	  na:'moy',z0:'----',sele:tab.moyen_id==null?-1:tab.moyen_id,
     add:'', add2:tabid,res:moyens
   })%>
 	</td>
 	<td>
-	  <%= new EJS({
-	  url:'/templates/dodropbox.html.ejs'}).render({
+    <%= JST['views/dodropbox']({
 	  na:'cat',z0:'--------',sele:tab.category_id==null?0:tab.category_id,
     add:'',add2:tabid,res:categories
   })%>
@@ -59,9 +55,9 @@
 	  <td class="solde" id="so<%= tabid %>"><%= typeof(solde)=='number' ? solde : '' %></td>
 	  <td>
 	  <button class="btn btn-default monbutton" name="duploradd">
-	      <span class="icobutton addbutton">add</span></button></td>
+	      <span class="icobutton addbutton glyphicon glyphicon-plus"/></button></td>
 	  <td>
 	      <button class="btn btn-default monbutton"
         name="supporclear" type="reset">
-	      <span class="icobutton delbutton">del</span></button></td>
+	      <span class="icobutton delbutton glyphicon glyphicon-minus"/></button></td>
     </tr>

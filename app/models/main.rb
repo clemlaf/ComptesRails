@@ -29,28 +29,30 @@ class MainForm
     args[:category]=category_ids unless category_ids.empty?
     args[:moyen]=moyen_ids unless moyen_ids.empty?
     args[:com]=com unless com.empty?
+    args[:poS]=(poS == 'x') unless poS.empty? or !'x_'.include?(poS)
     return args
   end
   def to_type
-    cpS_ids=self.class.to_iarr cpS_ids
-    cpD_ids=self.class.to_iarr cpD_ids
-    category_ids=self.class.to_iarr category_ids
-    moyens_ids=self.class.to_iarr moyens_ids
-    if date1.respond_to?(:to_date) and not date1.is_a?(String)
-      date1=date1.to_date
+    @cpS_ids=self.class.to_iarr(@cpS_ids)
+    @cpD_ids=self.class.to_iarr(@cpD_ids)
+    @category_ids=self.class.to_iarr(@category_ids)
+    @moyen_ids=self.class.to_iarr(@moyen_ids)
+    if @date1.respond_to?(:to_date) and not @date1.is_a?(String)
+      @date1=@date1.to_date
     else
-      date1=Date.strptime(date1, I18n.t('date.formats.default')) rescue nil
+      @date1=Date.strptime(@date1, I18n.t('date.formats.default')) rescue nil
     end
-    if date2.respond_to?(:to_date) and not date2.is_a?(String)
-      date2=date2.to_date
+    if @date2.respond_to?(:to_date) and not @date2.is_a?(String)
+      @date2=@date2.to_date
     else
-      date2=Date.strptime(date2, I18n.t('date.formats.default')) rescue nil
+      @date2=Date.strptime(@date2, I18n.t('date.formats.default')) rescue nil
     end
-    com=com.to_s
-    nb=nb.to_i
-    type=type.to_i
-    page=page.to_i
-    poS=poS.to_s
+    @com=@com.to_s
+    @nb=@nb.to_i
+    @type=@type.to_i
+    @page=@page.to_i
+    @poS=@poS.to_s
+    return self
   end
 
   def persisted?

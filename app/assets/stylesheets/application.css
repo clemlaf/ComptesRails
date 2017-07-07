@@ -12,6 +12,5 @@
  *
  *= require bootstrap-datepicker3
  *= require typeahead-rails
- *= require_tree .
  *= require_self
  */

@@ -40,6 +40,7 @@ gem 'flot-rails', '~> 0.0.7'
 gem 'bootstrap-sass'
 gem 'bootstrap-datepicker-rails', '~> 1.6', '>= 1.6.1.1'
 gem 'typeahead-rails'
+gem 'ejs'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 

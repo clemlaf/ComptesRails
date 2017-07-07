@@ -1,0 +1,12 @@
+<table name="<%= ptable.name %>">
+  <tr><th>Index</th><th>Name</th></tr>
+  <% ptable.each do |i| %>
+  <%= render partial: 'pline', object:i %>
+  <%end%>
+  <tr id="rwnew" data-paramc="">
+    <td><input name="id" readonly size=3 type="text" value="new"
+    class="form-control form-control-sm"></td>
+    <td><input name="name" type="text" value=""
+    class="form-control"></td>
+  </tr>
+</table>

@@ -19,7 +19,7 @@
   <a data-toggle="collapse" href="#myform"><%=t :show_form%></a>
 </div>
 <div class="panel-collapse collapse in" id="myform">
-<%= form_for @main, as: :main, url: main_table_url, remote: true, html: {class:"form-inline"} do |f| %>
+<%= form_for @main, as: :main, url: main_table_path, remote: true, html: {class:"form-inline"} do |f| %>
   <div class="form_row form-group form-group-sm col-sm-2">
   &nbsp;<%= f.label :cpS_ids %></br>
   <%= f.select :cpS_ids, Compte.to_select, {},{multiple:true, required:true, class:"form-control form-control-sm" }  %>
@@ -50,9 +50,12 @@
   </div>
   <div class="form_row form-group form-group-sm col-sm-1">
   &nbsp;<%= f.label :poS %></br>
-  <%= f.text_field :poS, class:"form-control form-control-sm" %>
+  <%= f.hidden_field(:poS) %>
+  <button id="pos_toggle" class="form-control form-control-sm">
+    <span class='glyphicon glyphicon-<%= :pos=='x' ? 'ok' : (:pos=='_' ? 'remove' : 'question')%>-sign' />
+  </button>
   </div>
-  <div class="form_row radio radio-sm col-sm-5">
+  <div class="form_row form-group form-group-sm radio radio-sm col-sm-5">
   &nbsp;<%= f.label :type %></br>
   <% @types.each do |mytype| %>
     <%= f.radio_button :type, mytype[:id] %><%= mytype[:txt] %></br>
@@ -71,3 +74,4 @@
   <p><%= t("hello") %></p>
 </div>
 </div>
+<div id='tooltip'></div>

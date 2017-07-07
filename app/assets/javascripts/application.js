@@ -14,7 +14,8 @@
 //= require jquery_ujs
 //= require notifyjs_rails
 //= require bootstrap-sprockets
-//= require bootstrap-datepicker
+//= require bootstrap-datepicker/core
+//= require bootstrap-datepicker/locales/bootstrap-datepicker.fr.js
 //= require jquery.flot
 //= require jquery.flot.resize
 //= require jquery.flot.time
@@ -22,4 +23,4 @@
 //= require jquery.flot.threshold
 //= require typeahead
 //= require turbolinks
-//= require_tree .
+//= require_tree ./views

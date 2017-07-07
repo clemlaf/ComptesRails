@@ -1,0 +1,14 @@
+<div class='container'>
+  <h1><%= t("param_header")%></h1>
+  <div class='row' >
+    <div class='col-md-4'>
+      <%= render partial: 'ptable', object: @comptes %>
+    </div>
+    <div class='col-md-4'>
+      <%= render partial: 'ptable', object: @categories %>
+    </div>
+    <div class='col-md-4'>
+      <%= render partial: 'ptable', object: @moyens %>
+    </div>
+  </div>
+</div>

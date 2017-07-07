@@ -41,7 +41,27 @@ div.content{
 .twitter-typeahead {vertical-align:middle;}
 .form-control{background-color:rgba(255,255,255,0.4);}
 
-.updn-row{text-align:center;display:none}
+.updn-row{text-align:center;display:contents;}
+.updn_but{display:none}
 
 input, select, button { max-width:100%}
 th   {padding-left: 2px;padding-right: 2px}
+.flot-x-axis .flot-tick-label {
+  text-align:right !important;
+  text-indent:-100%;
+  transform:rotate(-60deg);
+}
+#tooltip {
+  position:absolute;
+  width:300px;
+  height:100px;
+  text-align:center;
+  line-height:100px;
+  display:none;
+  opacity:0.80;
+  padding:2px;
+}
+.pieLabel {
+  font-size:8pt; text-align:center; padding:2px; color:black;
+  display:none
+}

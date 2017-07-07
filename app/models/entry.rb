@@ -30,6 +30,7 @@ class Entry < ApplicationRecord
     mh=main.to_hash()
     # filtre  sur le compte
     cptab=mh[:cpS]
+    cptabD=mh[:cpD]
     date_field=Entry.arel_table[:date]
     creat_field=Entry.arel_table[:created_at]
     if mh.has_key?(:cpD)
@@ -51,7 +52,7 @@ class Entry < ApplicationRecord
     mh.delete(:cpD)
     # fitre sur les autres champs
     rel=rel.where(mh)
-    case main.type.to_i
+    case main.type
     when 1
       # table
       allc=rel.count
@@ -60,12 +61,12 @@ class Entry < ApplicationRecord
       page=main.page
       nbpage=(allc-1)/lim+1
       page=nbpage if page==0 or page>nbpage
-      off=(page-1)*lim
+      off=[(page-1)*lim, allc-lim].min
       rel=rel.order(:date,:id)
       # no limit on pagination for graphes
-      rel=rel.limit(lim).offset(off) unless main.type >1
+      rel=rel.limit(lim).offset(off)
       # solde
-      sold=0.0 # pour graphe solde ou table initalisée à 0
+      sold=0.0 # pour table initalisée à 0
       if rel.any?
         firstent=rel.first
         # cas pour la table paginée
@@ -96,12 +97,15 @@ class Entry < ApplicationRecord
       rel=rel.order(:date,:id)
       sold=0.0 # pour graphe solde ou table initalisée à 0
       rel.each do |entr|
-        outarr.push(entr.reverse(cptab))
-        sold+=entr.pr
+        nentr=entr.reverse(cptab)
+        if not nentr.issym?(cptab,cptabD)
+        outarr.push(nentr)
+        sold+=nentr.pr
         soldarr.push [
-          entr.date.respond_to?(:to_time) ? entr.date.to_time.to_i*1000 : nil,
+          nentr.date.respond_to?(:to_time) ? nentr.date.to_time.to_i*1000 : nil,
           sold.to_f/100.0
         ]
+        end
       end
       outh[:soldes]=soldarr
     when 3
@@ -145,6 +149,8 @@ class Entry < ApplicationRecord
       datar=[]
       inskeys=[]
       delta=300*60*60*24*12
+      average=0.0
+      cnt=0
       allp.each_pair do |k,v|
         time=k.to_datetime.to_i*1000
         datap << [time, v/100.0]
@@ -152,6 +158,8 @@ class Entry < ApplicationRecord
         datam << [time,negv]
         datar << [time+delta, v/100.0+negv]
         inskeys << k
+        cnt+=1
+        average+=v/100.0+negv
       end
       allm.each_pair do |k,v|
         if not inskeys.include? k
@@ -159,12 +167,23 @@ class Entry < ApplicationRecord
           datam << [time, -v/100.0]
           datap << [time, 0.0]
           datar << [time+delta, -v/100.0]
+          cnt+=1
+          average-=v/100.0
         end
       end
+      average/=cnt.to_f
+      mybars={
+        show:true,
+        barWidth:delta
+      }
       outh[:recap]=[
-        {label:I18n.t('pos'), data: datap},
-        {label:I18n.t('neg'), data: datam},
-        {label:I18n.t('net'), data: datar}
+        {label:I18n.t('pos'), data: datap, bars:mybars},
+        {label:I18n.t('neg'), data: datam, bars:mybars},
+        {label:I18n.t('net'), data: datar, bars:mybars},
+        {label:I18n.t('average'), data:
+          [ [datar[0][0], average], [datar[-1][0], average] ],
+          lines: {show: true }, bars:{show:false}
+        }
       ]
     end
     outh
@@ -172,12 +191,13 @@ class Entry < ApplicationRecord
 
   def reverse(cptab)
     cptab.each do |cpid|
-      if self.cpS_id == cpid
+      if cpS_id == cpid
         break
       end
       if self.cpD_id == cpid and self.cpS_id !=cpid
+        tmp=self.cpD_id
         self.cpD_id=self.cpS_id
-        self.cpS_id=cpid
+        self.cpS_id=tmp
         self.pr=-self.pr
         tmp=self.poD
         self.poD=self.poS
@@ -186,6 +206,13 @@ class Entry < ApplicationRecord
       end
     end
     self
+  end
+  def issym?(cptab,cptabD)
+    out=false
+    out|=(cptab.include? self.cpS_id and cptab.include? self.cpD_id) if cptab.respond_to?(:include?)
+    out|=(cptabD.include? self.cpS_id and cptabD.include? self.cpD_id) if cptabD.respond_to?(:include?)
+    puts out
+    out
   end
   def as_json(options=nil)
     json=super(options)
