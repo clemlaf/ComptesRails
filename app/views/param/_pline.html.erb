@@ -1,13 +1,21 @@
-  <tr id="rw<%=pline.id%>" data-paramc="">
-    <td><input name="id" readonly size=3 type="text" value="<%= pline.id %>"
-    class="form-control form-control-sm"></td>
-    <td>
-        <div class="input-group">
+<tr id="rw<%=pline.id%>" data-paramc="">
+  <td>
+    <input name="id" readonly size=3 type="text" value="<%= pline.id %>"
+    class="form-control form-control-sm"/>
+  </td>
+  <td>
+    <div class="input-group">
       <input name="name" type="text" value="<%= pline.name %>"
-    class="form-control">
-    <span class="input-group-btn">
-    <button class="btn btn-default" data-paramd=''>D</button>
-    </span>
-   </div>
- </td>
-  </tr>
+      class="form-control"/>
+      <span class="input-group-btn">
+        <button class="btn btn-default" data-paramd=''><span class="glyphicon glyphicon-minus"/></button>
+      </span>
+    </div>
+  </td>
+      <% if pline.respond_to?(:parent) %>
+  <td>
+      <input name="parent" type="text" value="<%= pline.parent ? pline.parent.id : '' %>"
+      class="form-control form-control-sm" size=3 />
+  </td>
+      <%end%>
+</tr>

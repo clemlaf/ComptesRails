@@ -9,6 +9,7 @@ $(document).ready ->
       table: tabn
       id : $("#"+mid+" td input[name='id']").val()
       name : $("table[name='"+tabn+"'] #"+mid+" td input[name='name']").val()
+      parent_id : $("table[name='"+tabn+"'] #"+mid+" td input[name='parent']").val()
     $.ajax
       url: "/param/update"
       method: "POST"

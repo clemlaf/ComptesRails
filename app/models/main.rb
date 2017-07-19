@@ -24,8 +24,8 @@ class MainForm
     puts @cpS_ids
     puts @cpS_ids.inspect
     args={}
-    args[:cpS]=cpS_ids unless cpS_ids.empty?
-    args[:cpD]=cpD_ids unless cpD_ids.empty?
+    # args[:cpS]=cpS_ids unless cpS_ids.empty?
+    # args[:cpD]=cpD_ids unless cpD_ids.empty?
     args[:category]=category_ids unless category_ids.empty?
     args[:moyen]=moyen_ids unless moyen_ids.empty?
     args[:com]=com unless com.empty?

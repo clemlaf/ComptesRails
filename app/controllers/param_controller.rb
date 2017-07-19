@@ -44,7 +44,7 @@ class ParamController < ApplicationController
   end
   private
     def par_params
-      params.require(:param).permit(:id, :name)
+      params.require(:param).permit(:id, :name, :parent_id)
     end
     def par_table
       params.require(:param).permit(:table)

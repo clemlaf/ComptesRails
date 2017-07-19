@@ -1,33 +1,24 @@
 require 'main.rb'
 class MainController < ApplicationController
   skip_before_action :verify_authenticity_token
+
   def index
     if(params.has_key?(:locale))
       I18n.locale = params[:locale]
     end
-    @types=[{id:1,txt:I18n.t('types.table')},
-           {id:2,txt:I18n.t('types.evo')},
-           {id:3,txt:I18n.t('types.cam')},
-           {id:4,txt:I18n.t('types.mens')},
-           {id:5,txt:I18n.t('types.perio')}]
     main_params
   end
   def table
     @nentry=nil
     main_params
-    if @main.type==5
-      @nentry=Periodic.build_from_form(period_id,period_params) if params.has_key?(:entry)
-    else
-      @nentry=Entry.build_from_form(entry_id,entry_params) if params.has_key?(:entry)
-    end
+    @nentry=@model.build_from_form(entry_id,entry_params) if params.has_key?(:entry)
     generateJsonResp
   end
   def delete
     @nentry=nil
     main_params
-    clas=@main.type==5 ? Periodic : Entry
     if params.has_key?(:id)
-      clas.delete(del_id)
+      @model.delete(del_id)
     end
     generateJsonResp
   end
@@ -49,10 +40,8 @@ class MainController < ApplicationController
         image: (inttyp>1 and inttyp<5),
         locdate: I18n.t('date.formats.dp'),
         locplot: I18n.t('date.formats.default'),
-        specid: @nentry==nil ? -1 : @nentry.id
-      }.merge(
-         inttyp<5 ? Entry.find_from_main(@main,@nentry) : {periods:Periodic.all}
-        )
+        specid: @nentry==nil ? -1 : @nentry.id,
+      }.merge  @class.new(@main,@nentry).data
       respond_to do |format|
         format.json {render json: @data}
       end
@@ -62,6 +51,11 @@ class MainController < ApplicationController
         I18n.locale = params[:locale]
         puts I18n.locale
       end
+      @types=[{id:1,txt:I18n.t('types.table'),class:MainHelper::MainTable},
+                {id:2,txt:I18n.t('types.evo'),class: MainHelper::MainSoldeGraph},
+                {id:3,txt:I18n.t('types.cam'),class:MainHelper::MainCamembertGraph},
+                {id:4,txt:I18n.t('types.mens'),class:MainHelper::MainMonthlyRecap},
+                {id:5,txt:I18n.t('types.perio'),class:MainHelper::MainPeriodTable}]
       @main=MainForm.new
       if params.has_key?(:main)
         @main=MainForm.new(
@@ -70,22 +64,16 @@ class MainController < ApplicationController
             category_ids:[], moyen_ids:[])
           ).to_type
       end
+      @class=@types[@main.type-1][:class]
+      @model=@class.model
     end
     def entry_params
-      params.require(:entry).permit(:date,:cpS_id, :cpD_id,:com, :pr,
-       :moyen_id, :category_id, :poS )
+      params.require(:entry).permit(*@model.param_list )
     end
     def entry_id
       params.require(:entry).permit(:id )
     end
     def del_id
       params.require(:id)
-    end
-    def period_params
-      params.require(:entry).permit(:lastdate,:cpS_id, :cpD_id,:com, :pr,
-       :moyen_id, :category_id, :days, :months  )
-    end
-    def period_id
-      params.require(:entry).permit(:id )
     end
 end

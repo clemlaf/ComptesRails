@@ -1,6 +1,16 @@
 # Place all the behaviors and hooks related to the matching controller here.
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
+#= require_tree ./views
+#= require notifyjs_rails
+#= require bootstrap-datepicker/core
+#= require bootstrap-datepicker/locales/bootstrap-datepicker.fr.js
+#= require jquery.flot
+#= require jquery.flot.resize
+#= require jquery.flot.time
+#= require jquery.flot.pie
+#= require jquery.flot.threshold
+#= require typeahead
 
 @myajax = (id) ->
    if $(".datepicker").length > 0
@@ -50,7 +60,7 @@
 
 @duploradd = (id) ->
   if id == "rwnew"
-    ajax(id)
+    myajax(id)
   else
     duplicate(id)
 
@@ -103,6 +113,15 @@
   $ -> $("[data-settoday]").click -> setToday($(this).closest("div.input-group").find("input:first"))
   $ -> $(".up_but").click -> updnpage(-1)
   $ -> $(".dn_but").click -> updnpage(+1)
+  $ -> $("#soldepointe").click ->
+    sval = $(this).html()
+    tod=new Date()
+    fom=new Date(tod.getFullYear(), tod.getMonth(),1,12)
+    clearline "rwnew"
+    $("#rwnew td input[name=date]").val($.fn.datepicker.DPGlobal.formatDate(fom, $("#rwnew td input[name=date]").data().dateFormat, $('#locale').val()))
+    $("#rwnew td select[name=cp_d]").val(data.first_parent)
+    $("#rwnew td input[name=pr]").val(-1*parseFloat(sval))
+    $("#rwnew td input[name=com]").val("encours CB")
   comta = new Bloodhound
     datumTokenizer: Bloodhound.tokenizers.obj.whitespace('com'),
     queryTokenizer: Bloodhound.tokenizers.whitespace,
