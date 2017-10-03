@@ -51,6 +51,9 @@
 	    <input id="pt<%= tabid %>" name="pt" class="check" type="checkbox"
 
       <% if (tab.poS==1){ %>checked<% } %>>
+	    <input id="ptd<%= tabid %>" name="ptd" class="check" type="checkbox"style="display:none"
+
+      <% if (tab.poD==1){ %>checked<% } %>>
       </td>
 	  <td class="solde" id="so<%= tabid %>"><%= typeof(solde)=='number' ? solde : '' %></td>
 	  <td>

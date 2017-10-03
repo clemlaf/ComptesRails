@@ -4,7 +4,10 @@ class Entry < EntryRecord
   belongs_to :moyen, optional: :true
   belongs_to :category, optional: :true
 
-  @@param_list = [:date, :cpS_id, :cpD_id, :com, :pr, :moyen_id, :category_id, :poS]
+  @@param_list = [:date, :cpS_id, :cpD_id, :com, :pr, :moyen_id, :category_id, :poS, :poD]
+  def self.param_list
+    @@param_list
+  end
 
 
   def reverse(cptab)

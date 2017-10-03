@@ -1,8 +1,10 @@
   <% if(type<5) { %>
         <div id='up_row' class='updn-row'>
-        <button class="btn btn-default updn_but up_but" id="up_but"><span class='glyphicon glyphicon-chevron-up'/></button>
+        <button class="btn btn-default updn_but home_but" id="up_but"><span class='glyphicon glyphicon-fast-backward'/></button>
+        <button class="btn btn-default updn_but up_but" id="up_but"><span class='glyphicon glyphicon-backward'/></button>
         page <%=page%>/<%=nbpage%>
-        <button class="btn btn-default updn_but dn_but" id="dn_but"><span class='glyphicon glyphicon-chevron-down'/></button>
+        <button class="btn btn-default updn_but dn_but" id="dn_but"><span class='glyphicon glyphicon-forward'/></button>
+        <button class="btn btn-default updn_but end_but" id="dn_but"><span class='glyphicon glyphicon-fast-forward'/></button>
         </div>
   <%} %>
   <table id="princ" class="mytable">
@@ -58,8 +60,10 @@
   </table>
     <% if(type<5) { %>
         <div id='dn_row' class='updn-row'>
-        <button class="btn btn-default updn_but up_but" id="up_but"><span class='glyphicon glyphicon-chevron-up'/></button>
+        <button class="btn btn-default updn_but home_but" id="up_but"><span class='glyphicon glyphicon-fast-backward'/></button>
+        <button class="btn btn-default updn_but up_but" id="up_but"><span class='glyphicon glyphicon-backward'/></button>
         page <%=page%>/<%=nbpage%>
-        <button class="btn btn-default updn_but dn_but" id="dn_but"><span class='glyphicon glyphicon-chevron-down'/></button>
+        <button class="btn btn-default updn_but dn_but" id="dn_but"><span class='glyphicon glyphicon-forward'/></button>
+        <button class="btn btn-default updn_but end_but" id="dn_but"><span class='glyphicon glyphicon-fast-forward'/></button>
         </div>
     <% } %>

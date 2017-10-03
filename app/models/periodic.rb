@@ -1,10 +1,13 @@
-class Periodic < ApplicationRecord
+class Periodic < EntryRecord
   belongs_to :cpS, class_name: "Compte", foreign_key: :cpS_id
   belongs_to :cpD, class_name: "Compte", foreign_key: :cpD_id, optional: :true
   belongs_to :moyen, optional: :true
   belongs_to :category, optional: :true
 
   @@param_list = [:lastdate, :cpS_id, :cpD_id, :com, :pr, :moyen_id, :category_id, :days, :months]
+  def self.param_list
+    @@param_list
+  end
 
   def nextdate
     self.lastdate+ self.days.days + self.months.months

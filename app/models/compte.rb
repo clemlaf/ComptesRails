@@ -1,5 +1,5 @@
 class Compte < ApplicationRecord
-  belongs_to :parent, class_name: "Compte", foreign_key: :parent_id
+  belongs_to :parent, class_name: "Compte", foreign_key: :parent_id, optional: true
   has_many :entriesS, class_name: "Entry", foreign_key: :cpS_id, :inverse_of => :cpS
   has_many :entriesD, class_name: "Entry", foreign_key: :cpD_id, :inverse_of => :cpD
   has_many :periodicsS, class_name: "Periodic", foreign_key: :cpS_id, :inverse_of => :cpS

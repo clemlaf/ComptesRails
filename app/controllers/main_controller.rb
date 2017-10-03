@@ -8,6 +8,16 @@ class MainController < ApplicationController
     end
     main_params
   end
+  def update
+    I18n.locale = "fr"
+    @nentry=nil
+    main_params
+    entries_params.each do |ent|
+      eid={id: ent.delete("id")}
+      Entry.build_from_form(eid,ent)
+    end
+    generateJsonResp
+  end
   def table
     @nentry=nil
     main_params
@@ -27,10 +37,12 @@ class MainController < ApplicationController
       puts @main.inspect
       inttyp=@main.type
       Periodic.make_all_entries
+      newline= inttyp<5 ? Entry.new : Periodic.new
+      newline.cpS=Compte.find(@main.cpS_ids.first) unless @main.cpS_ids.length==0
       @data={
-        typeahead: Entry.select(:com).distinct.where("created_at >= ?", 1.month.ago).order(created_at: :desc).limit(50).all,
+        typeahead: Entry.select(:com).where("created_at >= ?", 1.month.ago).order(created_at: :desc).limit(50).all,
         type: inttyp,
-        newline: inttyp<5 ? Entry.new : Periodic.new,
+        newline: newline,
         comptes: Compte.order(name: :asc).all,
         moyens: Moyen.order(name: :asc).all,
         categories: Category.order(name: :asc).all,
@@ -75,5 +87,13 @@ class MainController < ApplicationController
     end
     def del_id
       params.require(:id)
+    end
+    def entries_params
+      entries=[]
+      params.require(:entries).map do |p|
+	entries.push(p.permit(:id,*Entry.param_list))
+      end
+      puts entries.inspect
+      entries
     end
 end

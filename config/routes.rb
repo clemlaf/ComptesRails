@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   get 'main', to: 'main#index'
   post 'main/table'
   post 'main/delete'
-  post 'update', to: 'main#table'
+  post 'update' , to: 'main#update'
   get 'param/index'
   get 'param', to: 'param#index'
   post 'param/update'

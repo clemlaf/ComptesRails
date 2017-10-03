@@ -27,6 +27,7 @@ div.content{
 }
 .price{
   @extend .solde;
+  width: 6em;
   color: green !important;
   &[value^="-"] { color: red !important; }
 }

@@ -1,9 +1,6 @@
 class EntryRecord < ApplicationRecord
   self.abstract_class=true
 
-  def self.param_list
-    @@param_list
-  end
 
   def self.build_from_form(idp,attrs)
     id=idp[:id]
