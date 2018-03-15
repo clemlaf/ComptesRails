@@ -90,7 +90,7 @@ class MainController < ApplicationController
     end
     def entries_params
       entries=[]
-      params.require(:entries).map do |p|
+      params.permit(:entries).map do |p|
 	entries.push(p.permit(:id,*Entry.param_list))
       end
       puts entries.inspect
