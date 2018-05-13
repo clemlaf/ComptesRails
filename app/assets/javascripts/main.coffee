@@ -255,4 +255,11 @@ $(document).ready ->
   $("#new_main [name^='main']").on("change", (e ) ->
      $("#new_main").submit()
   )
+  $("#myform select").hover(
+      () ->
+        $(this).height(250)
+    ,
+      () ->
+        $(this).height("auto")
+  )
   $("#new_main").submit()

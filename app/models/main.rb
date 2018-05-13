@@ -28,7 +28,7 @@ class MainForm
     # args[:cpD]=cpD_ids unless cpD_ids.empty?
     args[:category]=category_ids unless category_ids.empty?
     args[:moyen]=moyen_ids unless moyen_ids.empty?
-    args[:com]=com unless com.empty?
+    #args[:com]='%'+com+'%' unless com.empty?
     args[:poS]=(poS == 'x') unless poS.empty? or !'x_'.include?(poS)
     return args
   end

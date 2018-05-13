@@ -24,6 +24,8 @@ module MainHelper
       # filtre sur la date
       @rel=@rel.where(@date_field.gt(@main.date1)) if @main.date1
       @rel=@rel.where(@date_field.lt(@main.date2)) if @main.date2
+      # fitre sur le champ commentaire
+      @rel=@rel.where("com like ?", "%"+@main.com+"%") unless @main.com.empty?
       # fitre sur les autres champs
       @rel=@rel.where(@main.to_hash)
     end
@@ -104,6 +106,9 @@ module MainHelper
       @relp=@relp.where(@date_field.lt(@main.date2)) if @main.date2
       @relm=@relm.where(@date_field.gt(@main.date1)) if @main.date1
       @relm=@relm.where(@date_field.lt(@main.date2)) if @main.date2
+      # fitre sur le champ commentaire
+      @relp=@relp.where("com like ?", "%"+@main.com+"%") unless @main.com.empty?
+      @relm=@relm.where("com like ?", "%"+@main.com+"%") unless @main.com.empty?
       # filtre sur les autres champs
       @relp=@relp.where(@main.to_hash)
       @relm=@relm.where(@main.to_hash)
@@ -139,13 +144,13 @@ module MainHelper
       datar=[]
       delta=300*60*60*24*12
       average=0.0
-      cnt=0
-      mintime=keys[0].to_datetime.to_i*1000
+      mintime=keys[0].to_datetime
       maxtime=mintime
       keys.each do |k|
-        time=k.to_datetime.to_i*1000
+        time=k.to_datetime
         mintime=[mintime,time].min
         maxtime=[maxtime,time].max
+        time=time.to_i*1000
         posv= allpp.has_key?(k) ? allpp[k]/100.0 : 0.0
         posv+= allmp.has_key?(k) ? -1*allmp[k]/100.0 : 0.0
         negv= allmm.has_key?(k) ? -1*allmm[k]/100.0 : 0.0
@@ -153,10 +158,12 @@ module MainHelper
         datap << [time, posv]
         datam << [time, negv]
         datar << [time+delta, posv+negv]
-        cnt+=1
         average+=posv+negv
       end
-      average/=cnt.to_f
+      puts ((Time.at(maxtime.to_i)-Time.at(mintime.to_i))/(1.month))
+      average/=((Time.at(maxtime.to_i)-Time.at(mintime.to_i))/(1.month)).round.to_f
+      mintime=mintime.to_i*1000
+      maxtime=maxtime.to_i*1000
       mybars={
         show:true,
         barWidth:delta
