@@ -46,6 +46,7 @@ fr:
     com: "Commentaire"
     pr: "Prix"
     sol: "Solde"
+  reset: "Réinit. filtre"
   date:
     formats:
       default: "%d/%m/%Y"
